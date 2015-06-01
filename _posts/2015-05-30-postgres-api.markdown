@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Postgres API"
+title:  "Postgres HTTP API"
 date:   2015-05-30 22:12:35
 categories: postgres api postgrest
 ---
