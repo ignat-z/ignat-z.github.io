@@ -140,3 +140,8 @@ AuthorsFeedback.all
   #<AuthorsFeedback sum: 180, name: "Nikolai Gogol", author_id: 3>
 #]>
 {% endhighlight %}
+
+P.S. Don't forget to chnage your dump format, `schema.rb` can't store materialized view structure, so, you need to store all this in SQL. Change in `application.rb`
+{% highlight ruby %}
+config.active_record.schema_format = :sql
+{% endhighlight %}

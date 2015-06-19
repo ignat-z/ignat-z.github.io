@@ -172,8 +172,17 @@
     margin-left: 0;
     list-style: none;
 
-    > li {
-        margin-bottom: $spacing-unit;
+    tr {
+        line-height: 25px;
+        td {
+            &.date {
+                width: 25%;
+                text-align: right;
+                padding-right: 20px;
+                line-height: 25px;
+                vertical-align: middle;
+            }
+        }
     }
 }
 
