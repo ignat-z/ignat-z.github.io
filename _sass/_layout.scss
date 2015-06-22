@@ -7,6 +7,7 @@
 
     // Positioning context for the mobile navigation icon
     position: relative;
+    flex: none;
 }
 
 .site-title {
@@ -93,6 +94,7 @@
 .site-footer {
     border-top: 1px solid $grey-color-light;
     padding: $spacing-unit 0;
+    flex: none;
 }
 
 .footer-heading {
@@ -162,6 +164,8 @@
  */
 .page-content {
     padding: $spacing-unit 0;
+    flex: 1 0 auto;
+    width: 100%;
 }
 
 .page-heading {
