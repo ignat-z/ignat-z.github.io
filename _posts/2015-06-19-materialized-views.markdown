@@ -5,12 +5,10 @@ date:   2015-06-19 17:49:35
 categories: rails materialized views
 ---
 
-Materialized view is a object that contains the query's results. Unlike database table it doesn't support INSERT/UPDATE/DELETE opertaions. Since all this operations unsupported to update materialized view you need to call refresh view opertaion. In PostgreSQL materialized views support was introduced in version 9.3.
+Materialized view is a object that contains the query's results. Unlike database table it doesn't support `INSERT`/`UPDATE`/`DELETE` opertaions. Since all this operations unsupported to update materialized view you need to call refresh view opertaion. In PostgreSQL materialized views support was introduced in version 9.3.
 From [PostgreSQL documentation](<http://www.postgresql.org/docs/9.3/static/sql-creatematerializedview.html>) you can see how to create materialized view. So, you need query that you want to materialize and... that all.
 
-Ok, let's see, how we can use it in rails.
-
-Let's assume you have next structure: books, authors and feedbacks. Each author has many books, each book has many feedbacks
+Let's assume you have next structure: `books`, `authors` and `feedbacks`. Each `author` has many `books`, each `book` has many `feedbacks`
 
 {% highlight ruby %}
 # author.rb
@@ -35,7 +33,8 @@ class Feedback < ActiveRecord::Base
 end
 {% endhighlight %}
 
-And let's assume you need to we need to show top authors by their feedbacks. We have Rails ActiveRecord and it seems easy
+And let's assume you need to we need to show top authors by their feedbacks. We have Rails `ActiveRecord` and it seems easy
+
 {% highlight ruby %}
 Author.joins(:feedbacks, :books)
       .group("authors.name")
@@ -43,7 +42,9 @@ Author.joins(:feedbacks, :books)
       .sum("feedbacks.mark")
 # {"Alexander Pushkin"=>360, "Mikhail Lermontov"=>330, "Nikolai Gogol"=>180}
 {% endhighlight %}
-But three INNER JOINS, isn't too much? Ok, let's use our materialized views! Starting from migration:
+
+But three `INNER JOINS`, isn't too much? Let's use our materialized views! Starting from migration:
+
 {% highlight ruby %}
 class CreateAuthorsFeedbacks < ActiveRecord::Migration
   def self.up
@@ -66,16 +67,22 @@ class CreateAuthorsFeedbacks < ActiveRecord::Migration
   end
 end
 {% endhighlight %}
-To be honest, I'm not big fun of using rails with their to_sql and so on and prefer to write pure SQL for such migrations. But it's sample and we will keep it so.
-Each selected column will be materialized view column, that's why we used `as` for `authors.id`, in our table "authors.id" will be stored in "author_id" column. Unlike simple views, we can index any materialized view column, additionaly, we will make it index unique. As I said before, to actualize data in view we need to call refresh view. In pure PostgreSQL it will be:
+
+To be honest, I'm not big fun of using Rails `to_sql` method and so on and prefer to write pure SQL for such migrations. But it's sample and we will keep it so.
+Each selected column will be `materialized view` column, that's why we used `as` for `authors.id`, in our table "authors.id" will be stored in "author_id" column. Unlike simple views, we can index any materialized view column, additionaly, we will make it index unique. As I said before, to actualize data in view we need to call refresh view. In pure `PostgreSQL` it will be:
+
 {% highlight sql %}
 REFRESH MATERIALIZED VIEW authors_feedbacks
 {% endhighlight %}
-But in PostgreSQL 9.4 we can do it concurrently! It will refresh the materialized view without locking out concurrent selects on the materialized view, but... You need uniq index on materialized view for this. Wait a minute, we alredy have one!
+
+But in `PostgreSQL` 9.4 we can do it concurrently! It will refresh the materialized view without locking out concurrent selects on the materialized view, but... You need uniq index on materialized view for this. Wait a minute, we alredy have one!
+
 {% highlight sql %}
 REFRESH MATERIALIZED VIEW CONCURRENTLY authors_feedbacks
 {% endhighlight %}
-As I can see, concurrently refreshing much more quick if your index very simple. With complex index it can be even slower then unconcurrent refreshing. As it behave like table we can even use it as ActiveRecord model.
+
+As I can see, concurrently refreshing much more quick if your index very simple. With complex index it can be even slower then unconcurrent refreshing. As it behave like table we can even use it as `ActiveRecord` model.
+
 {% highlight ruby %}
 # authors_feedback.rb
 class AuthorsFeedback < ActiveRecord::Base
@@ -97,7 +104,9 @@ class AuthorsFeedback < ActiveRecord::Base
   end
 end
 {% endhighlight %}
+
 As I said before, materialized view doesn't support any editing operations, for this we will use concern `ReadOnlyModel`
+
 {% highlight ruby %}
 module ReadOnlyModel
   extend ActiveSupport::Concern
@@ -121,7 +130,9 @@ module ReadOnlyModel
   end
 end
 {% endhighlight %}
+
 And we need to add association for authors
+
 {% highlight ruby %}
 class Author < ActiveRecord::Base
   has_many :books
@@ -129,7 +140,9 @@ class Author < ActiveRecord::Base
   has_one  :authors_feedback
 end
 {% endhighlight %}
+
 And that's all, just use it.
+
 {% highlight ruby %}
 Author.last.authors_feedback
 # => #<AuthorsFeedback sum: 180, name: "Nikolai Gogol", author_id: 3>
