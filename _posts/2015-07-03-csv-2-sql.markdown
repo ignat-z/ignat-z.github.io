@@ -1,0 +1,144 @@
+---
+layout: post
+title:  "CSV2SQL"
+date:   2015-07-03 21:37:35
+categories: postgres csv sql
+---
+
+The CSV ("Comma Separated Values") file format is often used to exchange data between differently similar applications. For programmer, parsing CSV files isn't a rare case. If CSV file contains not more than one hundred lines it's not problem to parse it with built in programming language tools or libraries. But when you are using very high-level language and file size increases you need something more powerful.
+
+For example, we have file `file.csv` which size is 496M. Can you suggests how much time it will take to parse this file on my MacBookPro11,2 with default Ruby csv library?
+
+Ooops, some info about file
+
+{% highlight bash %}
+$ wc -l file.csv
+ 28897456 file.csv
+$ head -n 2 file.csv
+1,2,3,4,5,6,7,8,9
+1,2,3,4,5,6,7,8,9
+{% endhighlight %}
+
+Ok, now, let's try to just read it with ruby
+
+{% highlight ruby %}
+require 'csv'
+CSV.read("file.csv")
+{% endhighlight %}
+
+{% highlight bash %}
+$ time ruby script.rb
+ruby script.rb  1834,16s user 2502,81s system 87% cpu 1:22:57,79 total
+{% endhighlight %}
+
+1:22:57? Isn't good. But if you trying to think about CSV format you will find that it's very similar to relational database with columns. Could PostgreSQL help us in this question?
+
+Let's write script that creates temp table and saves each file record in this table. We will use PostgreSQL [COPY](<http://www.postgresql.org/docs/9.4/static/sql-copy.html>) command to parse CSV file.
+
+{% highlight sql %}
+CREATE TEMP TABLE digits_table (a1 int, a2 int, a3 int, a4 int, a5 int, a6 int, a7 int, a8 int, a9 int);
+COPY digits_table FROM '/path/to/file.csv' WITH DELIMITER ',';
+{% endhighlight %}
+
+{% highlight bash %}
+$ time psql -U postgres -d database -a -f script.sql
+CREATE TEMP TABLE digits_table (a1 int, a2 int, a3 int, a4 int, a5 int, a6 int, a7 int, a8 int, a9 int);
+CREATE TABLE
+COPY digits_table FROM '/path/to/file.csv' WITH DELIMITER ',';
+COPY 28897456
+psql -Upostgres -dengine_temp -a -f script.sql  0,01s user 0,01s system 0% cpu 44,399 total
+{% endhighlight %}
+
+Just 44 seconds and we have all this stuff in DB. Pretty cool. But how you can use it in real world issues?
+Let's assume, you have list of abbreviations, list of doctors and you need to save all this stuff into table that contains full doctor name and doctor's high school. Users table has next structure:
+
+{% highlight sql %}
+   Column    | Type | Modifiers
+-------------+------+-----------
+ full_name   | text |
+ high_school | text |
+{% endhighlight %}
+
+We have file with abbreviations (I used [this](<https://en.wikipedia.org/wiki/List_of_abbreviations_for_medical_organisations_and_personnel>)) that separated with tabs and looks like
+
+{% highlight bash %}
+$ head -n 3 list_of_abbrs.csv
+AA  Alcoholics Anonymous
+AABB  AABB, formerly known as the American Association of Blood Banks
+AACN  American Association of Critical-Care Nurses
+{% endhighlight %}
+
+And list of doctors that looks like
+{% highlight bash %}
+$ head -n 3 doctors.csv
+Christophe,Bartell,AAP
+Aaliyah,Altenwerth,AAOS
+Albert,Collins,AAO
+{% endhighlight %}
+
+Let's put it all together. PostgreSQL uses tabs as default delimetr for text format that used by default in `COPY` comand. Starting from parsing list of abbreviations:
+
+{% highlight sql %}
+# CREATE TEMP TABLE abbreviations (abbreviation text, organisation_or_personnel text);
+# COPY abbreviations FROM '/path/to/file/list_of_abbrs.csv';
+COPY 57
+# SELECT * FROM abbreviations LIMIT 5;
+ abbreviations |                    organisation_or_personnel
+---------------+-----------------------------------------------------------------
+ AA            | Alcoholics Anonymous
+ AABB          | AABB, formerly known as the American Association of Blood Banks
+ AACN          | American Association of Critical-Care Nurses
+ AAD           | American Association of Dermatology
+ AADGP         | American Academy of Dental Group Practice
+{% endhighlight %}
+
+In PostgreSQL commas is default delimeter for `csv` format and we can replace `WITH DELIMITER ','` with `WITH (FORMAT "csv")`. Then retrieve doctors from file:
+
+{% highlight sql %}
+# CREATE TEMP TABLE doctors (first_name text, second_name text, high_school text);
+# COPY doctors FROM '/path/to/file/doctors.csv' WITH (FORMAT "csv");
+# SELECT * FROM doctors;
+ first_name | second_name | high_school
+------------+-------------+-------------
+ Christophe | Bartell     | AAP
+ Aaliyah    | Altenwerth  | AAOS
+ Albert     | Collins     | AAO
+ Alice      | Lind        | AAN
+{% endhighlight %}
+
+And try to generate query that retrive data for us:
+
+{% highlight sql %}
+#  SELECT "doctors"."first_name" || ' ' || "doctors"."second_name" as "full_name",
+#         "abbreviations"."organisation_or_personnel" as "high_school"
+#    FROM doctors
+#    INNER JOIN "abbreviations" ON "abbreviations"."abbreviation" = "doctors"."high_school";
+
+     full_name      |               high_school
+--------------------+------------------------------------------
+ Alice Lind         | American Academy of Nursing
+ Albert Collins     | American Academy of Ophthalmology
+ Albert Collins     | American Academy of Optometry
+ Aaliyah Altenwerth | American Academy of Orthopaedic Surgeons
+ Christophe Bartell | American Academy of Pediatrics
+{% endhighlight %}
+
+Oh no, there can be more than one definition of abbreviation. In my case I will use first abbreviation definition if there is more that one possible variant. [DISTINCT ON](<http://www.postgresql.org/docs/9.0/static/sql-select.html>) keyword will help:
+
+{% highlight sql %}
+# SELECT DISTINCT ON("doctors"."high_school")
+#        "doctors"."first_name" || ' ' || "doctors"."second_name" as "full_name",
+#        "abbreviations"."organisation_or_personnel" as "high_school"
+#   FROM doctors
+#   INNER JOIN "abbreviations" ON "abbreviations"."abbreviation" = "doctors"."high_school";
+     full_name      |               high_school
+--------------------+------------------------------------------
+ Alice Lind         | American Academy of Nursing
+ Albert Collins     | American Academy of Ophthalmology
+ Aaliyah Altenwerth | American Academy of Orthopaedic Surgeons
+ Christophe Bartell | American Academy of Pediatrics
+{% endhighlight %}
+
+Much better. You need just add `INSERT` to put all this data into `users` table. For more complex example you can combine all this stuff with Ruby ActiveRecord and it will save a lot of time. But you need understand that time spent on coding should be commensurate with time that you save by using it. If pure ruby version works 1 hour and you need to parse one document per week seems not so reasonable make all this overhead. This XKCD comics can be used like landmark and should help you.
+
+![Is It Worth the Time?](<https://imgs.xkcd.com/comics/is_it_worth_the_time.png>)
