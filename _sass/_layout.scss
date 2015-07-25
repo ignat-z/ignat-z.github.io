@@ -254,3 +254,12 @@
       margin-right: auto;
     }
 }
+
+#progress-indicator {
+  height: 3px;
+  background-color: $second-color;
+  position: fixed;
+  top: 0px;
+  width: 0px;
+  left: 0px;
+}
