@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Materialized Views in Rails"
+title:  "PostgreSQL Materialized Views in Rails"
 date:   2015-06-19 17:49:35
 categories: rails materialized views
 ---
