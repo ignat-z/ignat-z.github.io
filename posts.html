@@ -1,0 +1,22 @@
+---
+layout: default
+title: Posts
+permalink: /posts/
+---
+
+<div class="home">
+  <div class="post-list">
+  {% assign postsByYear = site.posts | group_by_exp:"post", "post.date | date: '%Y'" %}
+  {% for year in postsByYear %}
+    <h1>{{ year.name }}</h1>
+    <table class="post-table">
+      {% for post in year.items %}
+        <tr>
+          <td class="date">{{ post.date | date: "%b %-d, %Y" }}</td>
+          <td><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% endfor %}
+  </div>
+</div>

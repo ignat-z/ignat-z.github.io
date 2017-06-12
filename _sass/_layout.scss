@@ -175,6 +175,10 @@
     font-size: 20px;
 }
 
+.post-link {
+    font-size: 24px;
+}
+
 .post-list {
     margin-left: 0;
     list-style: none;
@@ -182,8 +186,8 @@
     tr {
         line-height: 25px;
         td {
+            text-align: left;
             &.date {
-                width: 25%;
                 text-align: right;
                 padding-right: 20px;
                 line-height: 25px;
@@ -198,8 +202,8 @@
     color: $grey-color;
 }
 
-.post-link {
-    font-size: 24px;
+.description {
+    font-size: 1.2em;
 }
 
 
@@ -256,10 +260,33 @@
 }
 
 #progress-indicator {
-  height: 3px;
-  background-color: $second-color;
-  position: fixed;
-  top: 0px;
-  width: 0px;
-  left: 0px;
+      height: 3px;
+      background-color: $second-color;
+      position: fixed;
+      top: 0px;
+      width: 0px;
+      left: 0px;
+}
+
+.avatar {
+      border-radius: 100px;
+}
+
+.center {
+      display: flex;
+      justify-content: center;
+}
+
+#map {
+      height: 55em;
+      width: 100%;
+}
+
+.links {
+      list-style: none;
+      font-size: 1.2em;
+}
+
+.post-table {
+      margin-left: 2em;
 }

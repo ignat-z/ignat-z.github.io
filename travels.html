@@ -1,0 +1,43 @@
+---
+layout: default
+title: Travels
+permalink: /travels/
+---
+
+<div>
+  <div class="center" id="map"></div>
+  <script>
+    function markerIcon() {
+      return {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: 'red',
+        fillOpacity: .6,
+        scale: 4.5,
+        strokeColor: 'white',
+        strokeWeight: 0.5
+      };
+    }
+
+    function initMap() {
+      var myLatLng = {% map %};
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: myLatLng[0]
+      });
+
+      for(var i = 0; i < myLatLng.length; i++) {
+        var marker = new google.maps.Marker({
+          position: myLatLng[i],
+          map: map,
+          icon: markerIcon(),
+          title: myLatLng[i].city
+        });
+      }
+
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDXaK22KvSs_q0Zmn1rAWLMbXSBKtczJw&callback=initMap">
+  </script>
+</div>

@@ -3,18 +3,9 @@ layout: default
 ---
 
 <div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    <table>
-    {% for post in site.posts %}
-      <tr>
-        <td class="date">{{ post.date | date: "%b %-d, %Y" }}</td>
-        <td><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></td>
-      </tr>
-    {% endfor %}
-    </table>
-  </ul>
-
+  <div class="center">
+    <img class="avatar" src="https://avatars1.githubusercontent.com/u/2878349?s=100"/>
+  </div>
+  <h2>Hello, I'm Ignat Zakrevsky</h2>
+  <p class="description">I am trying to write <a href="/posts">posts</a> about what I'm doing on my work. I like to travel and have <a href="/travels">map</a> with all visited cities.</p>
 </div>
