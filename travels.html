@@ -19,8 +19,7 @@ permalink: /travels/
     }
 
     function initMap() {
-      var myLatLng = {% map %};
-
+      var myLatLng = {{ site.data.map | jsonify }};
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
         center: myLatLng[0]
