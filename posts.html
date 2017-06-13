@@ -12,7 +12,7 @@ permalink: /posts/
     <table class="post-table">
       {% for post in year.items %}
         <tr>
-          <td class="date">{{ post.date | date: "%b %-d, %Y" }}</td>
+          <td class="date">{{ post.date | date: "%b %-d" }}</td>
           <td><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></td>
         </tr>
       {% endfor %}
