@@ -201,5 +201,5 @@ this.take = function(count) {
 
 Pretty easy. What's next? Next we need to realize exception throwing, ability to not only map elements but filters and so on, currenlty I'm thinking about storing all passed filters in cortege `{:indexNumber, :operation, :function}` and then process it, but it will be later. Now I just realized what I want and keep it so for a while.
 
-P.S. All work on this topic is stored on [github](<https://github.com/ignat-zakrevsky/jslazygen>).
+P.S. All work on this topic is stored on [github](<https://github.com/ignat-z/jslazygen>).
 P.P.S. Instead of using vim callback you can just pass --autotest argument into jasmine-node

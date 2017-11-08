@@ -3,8 +3,8 @@ title: Ignat Zakrevsky
 email: iezakrevsky@gmail.com
 description: Software Developer blog about what I'm doing and how
 baseurl: ""
-url: "http://ignat-zakrevsky.github.io"
-github_username:  ignat-zakrevsky
+url: "http://ignat-z.github.io"
+github_username:  ignat-z
 
 # Build settings
 markdown: kramdown
