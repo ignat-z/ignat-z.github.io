@@ -13,14 +13,14 @@ Let’s try to make our deprecation warning messages more standard. So, let’s 
 ```ruby
 class Calculator
   def calculate
-    # a lot of very useful calculation
+    # a lot of very useful calculations
     :result
   end
 end
 ```
 
 
-The most simple way to do it almost right is to use `ActiveSupport::Deprecation`. So, you simply need to add one line to your method body:
+The most simple way to do it is to use `ActiveSupport::Deprecation`. So, you simply need to add one line to your method body:
 
 ```ruby
 def calculate
@@ -37,11 +37,11 @@ DEPRECATION WARNING: You are using deprecated behavior which will be removed
 from the next major or minor release. (called from <main> at logic.rb:9)
 ```
 
-There are many options you can use to customize your deprecation messages. You can add some details, may be pass some callbacks, etc. But if you are going this way, you are changing method body polluting git history. In this case if something change you will need to change your messages across whole application. Yes, you can introduce some singletons, add inheritance, move it to different classes, may be introduce a factory...
+There are many options you can use to customize your deprecation messages. You can add some details, may be pass some callbacks, etc. But if you are going this way, you are changing method body and polluting git history. In this case if something change you will need to change your messages across whole application. Yes, you can introduce some singletons, add inheritance, move it to different classes, may be introduce a factory...
 
 Wait a minute, I’m simply wanted to deprecate some methods.
 
-To be honest, I do want to use the trick from the new Ruby version (I can’t actually remember which exactly), which enforced for method definitions to return their names, and to introduce something like: `deprecated def calculate`. And it’s really easy, we need to declare anonymous module which we will prepend for the class which contains methods we want to deprecate.
+Actually, I do want to use the trick from the new Ruby version (can’t remember exact number), which enforced method definitions to return their names, and allowed something like: `deprecated def calculate` to exist. And it’s really easy, we need to declare anonymous module which we will prepend for the class which contains methods we want to deprecate.
 
 
 ```ruby
@@ -69,9 +69,9 @@ class Calculator
 end
 ```
 
-We don’t change any business logic, just add some wrapper for it, and it looks really awesome (at least for me) but, actually, it doesn’t solve our problems (but it is still cool, from another side it is very similar to Java annotations, but who cares). Ok, we still have a problem.
+We don’t change any business logic, just add some wrapper for it, and it looks really awesome (at least for me) but, actually, it doesn’t solve our problems (but it is still cool). From the other side, it is very similar to Java annotations, but who cares). Ok, we still have a problem.
 
-If you will read Rails source code, you could find a module `Deprecation::MethodWrapper`, which is included in `ActiveSupport::Deprecation`. This allows us to deprecate methods without direct changes of our code. According to related docs we can use it in the next manner:
+Reading through Rails source code, you could find a module `Deprecation::MethodWrapper`, which is included in `ActiveSupport::Deprecation`. It allows to deprecate methods without making direct changes in our code. According to related docs we can use it in the next manner:
 
 ```ruby
 ActiveSupport::Deprecation.deprecate_methods(Calculator, :calculate)
@@ -84,13 +84,12 @@ DEPRECATION WARNING: calculate is deprecated and will be removed from Rails 5.2
 (called from <main> at logic.rb:11)
 ```
 
-Ok, it’s very nice, no any code changes, a little weird message which could be easily changed to something more readable. Rails provides us such an ability:
+Ok, it’s very nice, no code was changed, message is a little weird, but it can be easily changed to something more readable. Rails provides us such an ability:
  
 ```ruby
-custom_deprecator = ActiveSupport::Deprecation.new('next-release', 'Calculator')
 ActiveSupport::Deprecation.deprecate_methods(Calculator,
   calculate: 'please, do not use this method because of the reason',
-  deprecator: custom_deprecator)
+  deprecator: ActiveSupport::Deprecation.new('next-release', 'Calculator'))
 ```
 
 New result:
@@ -101,7 +100,7 @@ next-release (please, do not use this method because of the reason) (called from
 <main> at logic.rb:15)
 ```
 
-Ok, we have a nice and clean solution, which is doing what we want, but… How often do you ignore such messages? I will fix it later, aha. It will be nice to track such deprecation in some place to fix it later. Hm, very similar to errors tracking systems. So, Honeybadger for example. As you can see above, Rails provides us an ability to pass custom deprecators. If we investigate a little we will find that Rails actually calling only one method `deprecation_warning` (if we are talking about methods deprecations). So, we can introduce our own deprecator which will notify Honeybadger.
+Ok, we have a nice and clean solution, which is doing what we want, but… How often do you ignore such messages? I will fix it later, aha. It will be nice to track such deprecation in some place to fix it later. Hm, very similar to errors tracking systems. So, [Honeybadger](https://www.honeybadger.io/) for example. As you can see above, Rails provides us an ability to pass custom deprecators. Further investigation reveals that Rails is actually calling only one method: `deprecation_warning` (if we are talking about methods deprecations). So, we can introduce our own deprecator which will notify Honeybadger.
 
  As I said before, we simply need to implement `deprecation_warning` method to introduce our deprecator.
 
@@ -135,14 +134,12 @@ RSpec.describe HoneybadgerDeprecator do
   let(:fred)     { Class.new { def call; end } }
   let(:message)  { /`call` is deprecated/ }
 
-  subject { HoneybadgerDeprecator.new }
-
   before do
     ActiveSupport::Deprecation.deprecate_methods(fred, :call, deprecator: subject)
     Honeybadger.configure do |config|
       config.api_key = 'temp' # we need to set any API key
       config.backend = 'test' # special backend for Honeybadger testing
-      config.logger  = Logger.new('/dev/null') # we do not want to hit our console
+      config.logger  = NullLogger.new # we do not want to hit our console
     end
   end
 
@@ -151,13 +148,14 @@ RSpec.describe HoneybadgerDeprecator do
       fred.new.call
       Honeybadger.flush
     end.to change(Honeybadger::Backend::Test.notifications[:notices], :size).by(1)
+    
     expect(Honeybadger::Backend::Test.notifications[:notices].first.error_message)
       .to match(message)
   end
 end
 ```
 
-Now, let’s try to apply it for our `Calculator` code:
+Now, let’s try to apply it to our `Calculator` code:
 
 ```ruby
 ActiveSupport::Deprecation.deprecate_methods(Calculator,
@@ -200,7 +198,7 @@ class HoneybadgerDeprecator
 end
 ```
 
-And don’t forget tests:
+And don’t forget the tests:
  
 ```ruby
 RSpec.describe HoneybadgerDeprecator do
@@ -233,7 +231,7 @@ RSpec.describe HoneybadgerDeprecator do
       Honeybadger.configure do |config|
         config.api_key = 'temp'
         config.backend = 'test'
-        config.logger  = Logger.new('/dev/null')
+        config.logger  = NullLogger.new
       end
     end
 
