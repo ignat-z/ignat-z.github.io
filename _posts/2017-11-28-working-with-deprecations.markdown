@@ -3,7 +3,6 @@ layout: post
 title:  "Working with deprecations"
 date:   2017-11-28 21:11:13
 categories: rails honeybadger
-published: false
 ---
 
 Deprecations are the normal part of lifecycle of any large application. A big amount of code makes changes of public API really difficult. Especially if we need to do it for all the code. When you meet this problem for the first time, the first reaction is to simply add some `puts` with info and you think it will be ok, but there are better options, especially if your project is on RoR.
@@ -148,7 +147,7 @@ RSpec.describe HoneybadgerDeprecator do
       fred.new.call
       Honeybadger.flush
     end.to change(Honeybadger::Backend::Test.notifications[:notices], :size).by(1)
-    
+
     expect(Honeybadger::Backend::Test.notifications[:notices].first.error_message)
       .to match(message)
   end
@@ -245,4 +244,71 @@ RSpec.describe HoneybadgerDeprecator do
     end
   end
 end
+```
+
+_UPD:_ Another approach is to use Rails-provided DI instead of direct methods calling based on current Rails environment. There is a nice example how to use it in [official Rails guide](<http://guides.rubyonrails.org/configuring.html#custom-configuration>). New version of code could look something like:
+
+```ruby
+class ApplicationDeprecator
+  DEPRECATION = '⛔ Method `%<method_name>s` is deprecated. Please, refer to %<refer>s.'
+
+  def initialize(debug: false, refer: 'your team lead')
+    @debug = debug
+    @refer = refer
+  end
+
+  def deprecation_warning(depricated_method_name, message = nil, caller_backtrace = nil)
+    caller_backtrace ||= caller_locations(2) if @debug
+    message ||= format(DEPRECATION,
+                       method_name: depricated_method_name,
+                       refer: @refer)
+    reporter.notify(message, depricated_method_name, caller_backtrace)
+  end
+
+  private
+
+  def reporter
+    Rails.configuration.deprecation_reporter.tap do |instance|
+      unless instance.respond_to?(:notify)
+        raise ArgumentError, 'Deprecation reporter should respond to :notify'
+      end
+    end
+  end
+end
+
+class HoneybadgerReporter
+  def notify(message, depricated_method_name, caller_backtrace)
+    Honeybadger.notify(ActiveSupport::DeprecationException.new(message),
+                       message: message,
+                       trace: caller_backtrace,
+                       depricated_method_name: depricated_method_name)
+  end
+end
+
+class LogReporter
+  LOG_TEXT = '%<message>s Called from: %<trace>s'
+
+  def initialize(logger: Logger.new(STDOUT))
+    @logger = logger
+  end
+
+  def notify(message, depricated_method_name, caller_backtrace)
+    @logger.warn(format(LOG_TEXT,
+                        message: message,
+                        trace: caller_backtrace.to_a.join("\n")))
+  end
+end
+```
+
+And now, to configure what exactly should happen:
+
+```ruby
+# config/environments/production.rb
+config.deprecation_reporter = HoneybadgerReporter.new
+```
+
+```ruby
+# config/environments/test.rb
+# config/environments/development.rb
+config.deprecation_reporter = LogReporter.new
 ```
