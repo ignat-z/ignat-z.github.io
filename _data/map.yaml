@@ -1,3 +1,4 @@
+# https://www.latlong.net
 ---
 - lat: 53.904539
   lng: 27.561524
@@ -254,3 +255,27 @@
 - lat: 60.169857
   lng: 24.938379
   city: Helsinki
+- lat: 51.107883
+  lng: 17.038538
+  city: Wroclaw
+- lat: 51.050407
+  lng: 13.737262
+  city: Dresden
+- lat: 49.452103
+  lng: 11.076665
+  city: Nuremberg
+- lat: 47.570923
+  lng: 10.697709
+  city: Füssen
+- lat: 48.135124
+  lng: 11.581981
+  city: Munich
+- lat: 47.767638
+  lng: 13.364353
+  city: St Gilgen
+- lat: 47.557281
+  lng: 13.646960
+  city: Hallstatt
+- lat: 50.264893
+  lng: 19.023781
+  city: Katowice
