@@ -9,5 +9,5 @@ github_username:  ignat-z
 # Build settings
 markdown: kramdown
 exclude: [vendor]
-gems:
+plugins:
   - jekyll-sitemap
