@@ -177,7 +177,7 @@
 
 pre, code {
     font-weight: 100;
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: Monaco, "Lucida Console", "Bitstream Vera Sans Mono", Courier, monospace;
 }
 
 .post-link {
@@ -278,6 +278,12 @@ pre, code {
       top: 0px;
       width: 0px;
       left: 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+    #progress-indicator {
+        background-color: #777;
+    }
 }
 
 .avatar {

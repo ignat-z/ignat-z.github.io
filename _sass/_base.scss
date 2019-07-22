@@ -199,3 +199,31 @@ pre {
         }
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+        color: white;
+    }
+
+    a.site-title {
+       color:  lighten($brand-color, 80%);
+
+        &:visited {
+            color:  lighten($brand-color, 90%);
+        }
+    }
+
+    a {
+        color:  lighten($brand-color, 80%);
+
+        &:visited {
+            color:  lighten($brand-color, 70%);
+        }
+    }
+
+    pre, code {
+        background: #272822;
+        color: #f8f8f2;
+    }
+}
