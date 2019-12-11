@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
   {% include head.html %}
-
   <body>
+    <header class="site-header"></header>
 
-    {% include header.html %}
+    <div class="home">
+      <div class="menu">
+        <ul>
+          <li class="item"><a href="/">about</a></li>
+          <li class="item"><a href="/posts">posts</a></li>
+          <li class="item"><a href="/travels">travels</a></li>
+        </ul>
+      </div>
 
-    <div class="page-content">
-      <div class="wrapper">
+      <div class="content">
         {{ content }}
       </div>
     </div>
 
-    {% include footer.html %}
-
-    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   </body>
-
 </html>

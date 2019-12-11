@@ -1,0 +1,27 @@
+---
+---
+@charset "utf-8";
+@import "syntax-highlighting";
+
+#progress-indicator {
+      height: 2px;
+      background-color: #222;
+      position: fixed;
+      top: 0px;
+      width: 0px;
+      left: 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+    #progress-indicator {
+        background-color: #777;
+    }
+}
+
+article {
+   img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+}

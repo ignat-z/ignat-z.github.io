@@ -1,293 +1,59 @@
-/**
- * Site header
- */
-.site-header {
-    border-bottom: 1px solid $grey-color-light;
-    min-height: 56px;
-
-    // Positioning context for the mobile navigation icon
+.home {
     position: relative;
-    flex: none;
-}
+    display: flex;
 
-.site-title {
-    font-size: 14px;
-    line-height: 56px;
-    margin-bottom: 0;
-    float: left;
-    text-decoration: none;
+    .menu {
+      width: 7vw;
+      min-height: 100vh;
+      padding: 1.25rem 1.5rem;
 
-    &,
-    &:visited {
-        color: $grey-color-dark;
+      .item {
+        list-style: none;
+        text-transform: uppercase;
+        a {
+          text-decoration: none;
+          font-size: 0.75em;
+        }
+      }
+    }
+
+    .content {
+      width: 93vw;
+      min-height: 100vh;
+      padding: 1.25rem 2.25rem;
     }
 }
 
-.site-nav {
-    float: right;
-    line-height: 56px;
+.about {
+  .topinfo {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items:center;
+  }
 
-    .menu-icon {
-        display: none;
-    }
-
-    .page-link {
-        color: $text-color;
-        line-height: $base-line-height;
-
-        // Gaps between nav items, but not on the first one
-        &:not(:first-child) {
-            margin-left: 20px;
-        }
-    }
-
-    @include media-query($on-palm) {
-        position: absolute;
-        top: 9px;
-        right: 30px;
-        background-color: $background-color;
-        border: 1px solid $grey-color-light;
-        border-radius: 5px;
-        text-align: right;
-
-        .menu-icon {
-            display: block;
-            float: right;
-            width: 36px;
-            height: 26px;
-            line-height: 0;
-            padding-top: 10px;
-            text-align: center;
-
-            > svg {
-                width: 18px;
-                height: 15px;
-
-                path {
-                    fill: $grey-color-dark;
-                }
-            }
-        }
-
-        .trigger {
-            clear: both;
-            display: none;
-        }
-
-        &:hover .trigger {
-            display: block;
-            padding-bottom: 5px;
-        }
-
-        .page-link {
-            display: block;
-            padding: 5px 10px;
-        }
-    }
-}
-
-
-
-/**
- * Site footer
- */
-.site-footer {
-    border-top: 1px solid $grey-color-light;
-    padding: $spacing-unit 0;
-    flex: none;
-}
-
-.footer-heading {
-    font-size: 18px;
-    margin-bottom: $spacing-unit / 2;
-}
-
-.contact-list,
-.social-media-list {
+  .social {
+    vertical-align: baseline;
+    padding-left: 2.5rem;
+    font-family: monospace;
+    font-size: 1rem;
     list-style: none;
-    margin-left: 0;
-}
+  }
 
-.footer-col-wrapper {
-    font-size: 15px;
-    color: $grey-color;
-    margin-left: -$spacing-unit / 2;
-    @extend %clearfix;
-}
+  .me {
+    font-size: 3rem;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    padding-bottom: 1.5rem;
+  }
 
-.footer-col {
-    float: left;
-    margin-bottom: $spacing-unit / 2;
-    padding-left: $spacing-unit / 2;
-}
+  .moreme {
+    font-family: Verdana, sans-serif;
+    font-size: 1.5rem;
+  }
 
-.footer-col-1 {
-    width: -webkit-calc(33% - (#{$spacing-unit} / 2));
-    width:         calc(33% - (#{$spacing-unit} / 2));
-    text-align: left;
-}
-
-.footer-col-2 {
-    width: -webkit-calc(33% - (#{$spacing-unit} / 2));
-    width:         calc(33% - (#{$spacing-unit} / 2));
-    text-align: center;
-}
-
-.footer-col-3 {
-    width: -webkit-calc(33% - (#{$spacing-unit} / 2));
-    width:         calc(33% - (#{$spacing-unit} / 2));
-    text-align: right;
-}
-
-@include media-query($on-laptop) {
-    .footer-col-1,
-    .footer-col-2 {
-        width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-        width:         calc(50% - (#{$spacing-unit} / 2));
-    }
-
-    .footer-col-3 {
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
-}
-
-@include media-query($on-palm) {
-    .footer-col {
-        float: none;
-        width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-        width:         calc(100% - (#{$spacing-unit} / 2));
-    }
-}
-
-
-
-/**
- * Page content
- */
-.page-content {
-    padding: $spacing-unit 0;
-    flex: 1 0 auto;
-    width: 100%;
-}
-
-.page-heading {
-    font-size: 20px;
-}
-
-pre, code {
-    font-weight: 100;
-    font-family: Monaco, "Lucida Console", "Bitstream Vera Sans Mono", Courier, monospace;
-}
-
-.post-link {
-    text-decoration: none;
-    font-size: 24px;
-    border-bottom: 1px solid black;
-    margin-bottom: -1px;
-    &:hover {
-        border-bottom: 0;
-    }
-}
-
-.post-list {
-    margin-left: 0;
-    list-style: none;
-
-    tr {
-        line-height: 25px;
-        td {
-            text-align: left;
-            &.date {
-                text-align: right;
-                padding-right: 20px;
-                line-height: 25px;
-                vertical-align: middle;
-                font-family: monospace;
-            }
-        }
-    }
-}
-
-.post-meta {
-    font-size: $small-font-size;
-    color: $grey-color;
-}
-
-.description {
-    font-size: 1.2em;
-}
-
-
-
-/**
- * Posts
- */
-.post-header {
-    margin-bottom: $spacing-unit;
-}
-
-.post-title {
-    font-size: 42px;
-    letter-spacing: -1px;
-    line-height: 1;
-
-    @include media-query($on-laptop) {
-        font-size: 36px;
-    }
-}
-
-.post-content {
-    margin-bottom: $spacing-unit;
-
-    h2 {
-        font-size: 32px;
-
-        @include media-query($on-laptop) {
-            font-size: 28px;
-        }
-    }
-
-    h3 {
-        font-size: 26px;
-
-        @include media-query($on-laptop) {
-            font-size: 22px;
-        }
-    }
-
-    h4 {
-        font-size: 20px;
-
-        @include media-query($on-laptop) {
-            font-size: 18px;
-        }
-    }
-
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-}
-
-#progress-indicator {
-      height: 2px;
-      background-color: $second-color;
-      position: fixed;
-      top: 0px;
-      width: 0px;
-      left: 0px;
-}
-
-@media (prefers-color-scheme: dark) {
-    #progress-indicator {
-        background-color: #777;
-    }
-}
-
-.avatar {
-      border-radius: 100px;
+  .avatar {
+        border-radius: 50%;
+  }
 }
 
 .center {
@@ -296,15 +62,6 @@ pre, code {
 }
 
 #map {
-      height: 55em;
+      height: 60em;
       width: 100%;
-}
-
-.links {
-      list-style: none;
-      font-size: 1.2em;
-}
-
-.post-table {
-      margin-left: 2em;
 }

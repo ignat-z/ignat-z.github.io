@@ -1,13 +1,11 @@
-# Site settings
 title: Ignat Z
 email: iezakrevsky@gmail.com
-description: Software Developer blog about what I'm doing and how
-baseurl: ""
-url: "http://ignat-z.github.io"
-github_username:  ignat-z
+description: Contacts of Ignat Zakrevsky
+url: "https://ignat-z.github.io"
 
-# Build settings
-markdown: kramdown
 exclude: [vendor]
+markdown: kramdown
 plugins:
   - jekyll-sitemap
+sass:
+  style: compressed
