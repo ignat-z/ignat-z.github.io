@@ -10,7 +10,7 @@ permalink: /travels/
     function markerIcon() {
       return {
         path: google.maps.SymbolPath.CIRCLE,
-        fillColor: 'red',
+        fillColor: '#ff6961',
         fillOpacity: .6,
         scale: 4.5,
         strokeColor: 'white',
@@ -18,15 +18,20 @@ permalink: /travels/
       };
     }
 
+    function inDarkMode() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
     function initMap() {
       var myLatLng = {{ site.data.map | jsonify }};
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
-        center: myLatLng[0]
+        center: myLatLng[0],
+        styles: {{ site.data.mapcolors | jsonify }}[inDarkMode() ? "dark" : "light"]
       });
 
       for(var i = 0; i < myLatLng.length; i++) {
-        var marker = new google.maps.Marker({
+        new google.maps.Marker({
           position: myLatLng[i],
           map: map,
           icon: markerIcon(),
