@@ -26,19 +26,19 @@
 
 .about {
   .topinfo {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items:center;
-  }
 
   .social {
-    vertical-align: baseline;
-    padding-left: 2.5rem;
+    width: 150px;
+    text-align: center;
     font-family: monospace;
-    font-size: 1rem;
     list-style: none;
+    li {
+      display: inline-block;
+      zoom: 1;
+      *display: inline;
+    }
   }
+}
 
   .me {
     font-size: 3rem;
