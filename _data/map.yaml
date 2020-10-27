@@ -330,3 +330,18 @@
 - lat: 54.518890
   lng: 18.530540
   city: Gdynia
+- lat: 36.127228
+  lng: -115.171707
+  city: Brighton
+- lat: 53.408371
+  lng: -2.991573
+  city: Liverpool
+- lat: 53.480759
+  lng: -2.242631
+  city: Manchester
+- lat: 55.953251
+  lng: -3.188267
+  city: Edinburgh
+- lat: 57.412
+  lng: -6.192
+  city: Portree
