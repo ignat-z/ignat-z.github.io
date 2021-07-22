@@ -20,9 +20,9 @@ class CreateProducts < ActiveRecord::Migration[5.1]
 end
 ```
 
-Rails is pretty smart to parse "create" word and decide that you want to create new table `products`. There is one moment -- by default this table doesn't have timestamps columns. It's expected behavior because you may need simply JOIN table for `has_and_belongs_to_many` association or anything non-Rails specific at all. But mostly you really want to have this columns because they make developer's life much easier.
+Rails is pretty smart to parse "create" word and decide that you want to create new table `products`. There is one moment -- by default this table doesn't have timestamps columns. It's an expected behavior because you may need simply a JOIN table for `has_and_belongs_to_many` association or anything non-Rails specific at all. But mostly you want to have these columns because they make developers' life much easier.
 
-One way to solve this problem is to write custom test which will enforce you to add this columns for existing models. Rails provides a special method on class object to receive class descendants, non-surprisingly it is `descendants`. So, by calling `descendants` on `ApplicationRecord` class you will receive all classes which were inherited from `ApplicationRecord`. But there are some moments which could astonish you.
+One way to solve this problem is to write a custom test which will enforce you to add these columns for the existing models. Rails provides a special method on class object to receive the class descendants, non-surprisingly it is `descendants`. So, by calling `descendants` on `ApplicationRecord` class you receive all classes which were inherited from `ApplicationRecord`. But there are some moments which could astonish you.
 
 Let's run Rails console and try to exec this command:
 
@@ -46,12 +46,12 @@ ApplicationRecord.descendants.count # => 23
 
 ![Descendants](/assets/descendants.svg)
 
-Much better now. So, we have all Rails models in one place. Now we need to exclude anonymous classes and classes which aren't assume to have timestamps. I wrote a special class which makes this job:
+Much better now. So, we have all the application models in one place. Now we need to exclude anonymous classes and classes which aren't assume to have timestamps. I wrote a special class which makes this job:
 
 ```ruby
 class InterfaceTester
-  def initialize(blacklist = [])
-    @blacklist = blacklist
+  def initialize(blocklist = [])
+    @blocklist = blocklist
     Rails.application.eager_load!
   end
 
@@ -66,12 +66,13 @@ class InterfaceTester
   end
 
   def ignored?(model)
-    [model.anonymous?, blacklisted?(model)].any?
+    [model.anonymous?, blocklisted?(model)].any?
   end
 
-  def blacklisted?(model)
-    return false unless @blacklist
-    (model.ancestors & @blacklist).present?
+  def blocklisted?(model)
+    return false unless @blocklist
+
+    (model.ancestors & @blocklist).present?
   end
 end
 ```
@@ -80,9 +81,9 @@ As you can see it's super simple. So, how to use it?
 
 ```ruby
 describe InterfaceTester do
-  subject { described_class.new(black_list) }
+  subject { described_class.new(block_list) }
 
-  let(:black_list) { [] }
+  let(:block_list) { [] }
 
   it "have timestamps columns" do
     subject.models.each do |model|
@@ -146,13 +147,13 @@ Let's use it!
        expected Product(id: integer, name: text, transported: boolean) to has columns :created_at and :updated_at
 ```
 
-Perfect, RSpec even defined clear failure message for us for free. So, final version could look like:
+Perfect, RSpec even defined clear failure message for us for free. So, final version can look like:
 
 ```ruby
 describe InterfaceTester do
-  subject { described_class.new(black_list) }
+  subject { described_class.new(block_list) }
 
-  let(:black_list) { [Product] }
+  let(:block_list) { [Product] }
 
   it "have timestamps columns" do
     subject.models.each do |model|
@@ -162,7 +163,7 @@ describe InterfaceTester do
 end
 ```
 
-This technic is pretty expandable. For example here is an matcher which checks for defining instance methods:
+This technique is pretty expandable. For example here is a matcher which checks for defining instance methods:
 
 ```ruby
 RSpec::Matchers.define :define_methods do |*methods_names|

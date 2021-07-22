@@ -3,20 +3,28 @@ layout: default
 ---
 
 <div class="about">
-  <div class="topinfo">
-    <img class="avatar" alt="Avatar" loading="lazy" src="https://avatars1.githubusercontent.com/u/2878349?s=150"/>
-    <ul class="social">
-      <li><a href="https://github.com/ignat-z">gh</a></li>
-      <li><a href="https://linkedin.com/in/ignat-z/">in</a></li>
-      <li><a href="https://t.me/ignat_z">tg</a></li>
-    </ul>
-  </div>
-
   <p class="me">
-    Hi, I'm Ignat Zakrevsky
-  </p>
-
-  <p class="moreme">
+    <h1>hi,</h1>
+    I'm Ignat<br/>
     Feel free to email me at <a href="mailto:iezakrevsky@gmail.com">iezakrevsky@gmail.com</a>.
   </p>
+
+  <p>
+    <a href="https://github.com/ignat-z">gh</a> |
+    <a href="https://linkedin.com/in/ignat-z/">in</a> |
+    <a href="https://t.me/ignat_z">tg</a>
+  <p>
+
+  <div class="home">
+    <div class="post-list">
+      <ul>
+        {% for post in site.posts %}
+          <li>
+            <span><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></span>
+            <small>{{ post.date | date: "%Y %b %-d" }}</small>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 </div>

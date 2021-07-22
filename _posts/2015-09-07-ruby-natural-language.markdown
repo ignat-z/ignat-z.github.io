@@ -3,6 +3,7 @@ layout: post
 title:  "Ruby Natural Language"
 date:   2015-09-07 09:09:31
 categories: ruby natural
+published: false
 ---
 
 In Martin Fowler's book "Refactoring: Improving the Design of Existing Code" you can read nice statement:

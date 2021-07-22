@@ -3,6 +3,7 @@ layout: post
 title:  "Testing Chrome Extension with CodeShip"
 date:   2015-11-18 01:22:09
 categories: javascript codeship karma eslint
+published: false
 ---
 
 When you are writing your extension for Google Chrome (or Chromium) you want to be sure that your code works as you assume. The mosst effective and simple way to achive it is to use testing on your project.

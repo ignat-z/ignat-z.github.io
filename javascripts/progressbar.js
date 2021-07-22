@@ -1,6 +1,5 @@
 var
     article = document.getElementsByClassName('post')[0],
-    header  = document.getElementsByClassName('site-header')[0],
     events  = ['resize', 'scroll'],
     progressHeight;
 
@@ -10,7 +9,7 @@ function updateProgress(percentage) {
 }
 
 function setSizes() {
-    progressHeight = header.offsetHeight + article.offsetHeight - window.innerHeight;
+    progressHeight = article.offsetHeight - window.innerHeight;
 }
 
 function calculateProgress() {

@@ -9,11 +9,10 @@ body {
     font-weight: 300;
     line-height: $base-line-height;
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
-
     background: $background-color;
     color: $text-color;
+    overflow-x: hidden;
 }
 
 a {
@@ -26,6 +25,7 @@ a {
 
 code {
     font-family: Monaco, "Lucida Console", Courier, monospace;
+    font-weight: 100;
 }
 
 pre {
@@ -46,4 +46,9 @@ pre {
             color:  lighten($brand-color, 70%);
         }
     }
+}
+
+p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

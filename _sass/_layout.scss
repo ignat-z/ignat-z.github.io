@@ -8,7 +8,6 @@
 
       .item {
         list-style: none;
-        text-transform: uppercase;
         a {
           text-decoration: none;
           font-size: 1em;
@@ -22,47 +21,6 @@
     }
 }
 
-.about {
-  .topinfo {
-    .social {
-      width: 10em;
-      text-align: center;
-      font-family: monospace;
-      list-style: none;
-      line-height: 2;
-      li {
-        display: inline-block;
-        zoom: 1;
-        *display: inline;
-      }
-    }
-  }
-
-  .me {
-    margin-top: 1em;
-    line-height: 1;
-    font-size: 3em;
-    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-  }
-
-  .moreme {
-    font-family: Verdana, sans-serif;
-    font-size: 1.5em;
-    margin-top: 0.5em;
-  }
-
-  .avatar {
-    border-radius: 50%;
-    width: 10em;
-    height: 10em;
-  }
-}
-
-.center {
-      display: flex;
-      justify-content: center;
-}
-
 #map {
       height: 60em;
       width: 100%;
@@ -72,8 +30,8 @@
    .home {
       flex-direction: column;
 
-      .content {
-        padding: 1em;
+      .content, .about {
+        padding: 0 1em 0 1em;
       }
 
       .menu {
@@ -88,9 +46,7 @@
       }
    }
 
-  .about {
-    .me {
-      line-height: 1.2;
+    code {
+        font-size: 0.8em;
     }
-  }
 }

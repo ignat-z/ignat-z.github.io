@@ -3,6 +3,7 @@ layout: post
 title:  "Refactoring from case statement to lazy hash"
 date:   2016-09-19 18:11:33
 categories: ruby lambda refactoring
+published: false
 ---
 
 There are a lot of cases when you need to implement logic with complex case statements.
