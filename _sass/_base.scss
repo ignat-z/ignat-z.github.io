@@ -33,6 +33,19 @@ pre {
     margin: 1em;
 }
 
+strong {
+    font-weight: 600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
 
 @media (prefers-color-scheme: dark) {
     body {
@@ -47,9 +60,4 @@ pre {
             color:  lighten($brand-color, 70%);
         }
     }
-}
-
-p {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
 }
