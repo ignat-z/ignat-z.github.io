@@ -78,9 +78,13 @@ puts ASTRenderer.new(ast).call
 ```
 
 Result:
+
+
 ![AST tree](</assets/growing-trees-2/factorial_ast.png>)
 
 Result with comments (you could receive this version by minor changing code above):
+
+
 ![AST tree with comments](</assets/growing-trees-2/factorial_ast_comments.png>)
 
 Factorial function source code:

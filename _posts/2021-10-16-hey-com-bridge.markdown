@@ -53,7 +53,12 @@ webView.addJavascriptInterface(WebAppInterface(this), "Android")
 
 It was a really basic example that demonstrates how the sides can interact with each other. But in the real world, there are many nuances you need to keep in mind. It's about Android, what about iOS? How to manage increasing code size? And there are many more.
 
-Let's see how hey.com solves these problems. To demonstrate how it works let's show the messages from Rails `session` in the native view.
+Let's see how hey.com solves these problems. To demonstrate how it works let's show the messages from Rails `session` in the native view. This how it looks on iOS, Android and in a browser. You can see that there is no indication on iOS, there is toast element on Android and simple div with animation on browser.
+
+![iOS](/assets/strada/ios.gif)
+![Android](/assets/strada/android.gif)
+![Browser](/assets/strada/browser.gif)
+{: .text-center}
 
 Meet the sides:
 - **Strada** (aka `nativeBridge`). This is JavaScript code responsible for sending messages to the native code. Can be **Android Strada** or **iOS Strada**.
