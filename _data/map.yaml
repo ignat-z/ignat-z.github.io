@@ -1,4 +1,4 @@
-# https://www.latlong.net
+# https://www.gps-coordinates.net/
 ---
 - lat: 53.904539
   lng: 27.561524
@@ -330,8 +330,8 @@
 - lat: 54.518890
   lng: 18.530540
   city: Gdynia
-- lat: 36.127228
-  lng: -115.171707
+- lat: 50.828
+  lng: -0.140
   city: Brighton
 - lat: 53.408371
   lng: -2.991573
@@ -345,3 +345,162 @@
 - lat: 57.412
   lng: -6.192
   city: Portree
+- lat: 36.536
+  lng: 30.441
+  city: Mount Tahtali
+- lat: 36.896
+  lng: 30.713
+  city: Antalya
+- lat: 41.008
+  lng: 28.978
+  city: Istanbul
+- lat: 54.941
+  lng: 26.403
+  city: Grumbinenty
+- lat: 54.773
+  lng: 28.377
+  city: Nivki
+- lat: 54.856
+  lng: 29.159
+  city: Chashniki
+- lat: 51.003
+  lng: -0.937
+  city: South Downs National Park
+- lat: 51.481
+  lng: -3.179
+  city: Cardiff
+- lat: 50.738
+  lng: 0.249
+  city: Beachy Head
+- lat: 50.766
+  lng: 0.278
+  city: Eastbourne
+- lat: 50.778
+  lng: 0.110
+  city: Seaford
+- lat: 50.796
+  lng: 0.007
+  city: Peacehaven
+- lat: 50.220
+  lng: -5.385
+  city: Gwithian
+- lat: 50.215
+  lng: -5.48
+  city: St. Ives
+- lat: 50.187
+  lng: -5.418
+  city: Hayle
+- lat: 50.175
+  lng: -5.619
+  city: Bosigran
+- lat: 50.124
+  lng: -5.68
+  city: St Just
+- lat: 50.261
+  lng: -5.29
+  city: Portreath
+- lat: 50.295
+  lng: -5.201
+  city: St. Agnes
+- lat: 50.071
+  lng: -5.7
+  city: Sennen
+- lat: 50.128
+  lng: -5.466
+  city: Marazion
+- lat: 50.726
+  lng: -3.527
+  city: Exeter
+- lat: 54.065
+  lng: 27.736
+  city: Raubichi
+- lat: 53.413
+  lng: 24.543
+  city: Masty
+- lat: 52.571
+  lng: 23.804
+  city: Bielaviežskaja pušča
+- lat: 50.783
+  lng: -0.892
+  city: West Wittering
+- lat: 51.125
+  lng: 1.313
+  city: Dover
+- lat: 51.388
+  lng: 1.382
+  city: Margate
+- lat: 51.359
+  lng: 1.441
+  city: Broadstairs
+- lat: 51.752
+  lng: -1.258
+  city: Oxford
+- lat: 54.5
+  lng: -3.167
+  city: Lake District National Park
+- lat: 54.601
+  lng: -3.138
+  city: Keswick
+- lat: 54.579
+  lng: -3.147
+  city: Derwentwater
+- lat: 54.541
+  lng: -3.276
+  city: Buttermere
+- lat: 54.398
+  lng: -3.27
+  city: Boot
+- lat: 51.34
+  lng: 0.73
+  city: Sittingbourne
+- lat: 51.347
+  lng: 0.817
+  city: Conyer
+- lat: 51.314
+  lng: 0.891
+  city: Faversham
+- lat: 51.361
+  lng: 1.024
+  city: Whitstable
+- lat: 37.984
+  lng: 23.728
+  city: Athens
+- lat: 37.947
+  lng: 23.637
+  city: Piraeus
+- lat: 41.893
+  lng: 12.483
+  city: Rome
+- lat: 41.754
+  lng: 12.286
+  city: Ostia Antica
+- lat: 43.77
+  lng: 11.256
+  city: Florence
+- lat: 45.464
+  lng: 9.19
+  city: Milan
+- lat: 46.01
+  lng: 9.283
+  city: Varenna
+- lat: 46.034
+  lng: 10.006
+  city: Valbondione
+- lat: 46.361
+  lng: 11.915
+  city: Canale d'Agordo
+- lat: 45.437
+  lng: 12.335
+  city: Venice
+- lat: 44.494
+  lng: 11.343
+  city: Bologna
+- lat: 43.716
+  lng: 10.402
+  city: Pisa
+- lat: 44.239
+  lng: 9.49
+  city: Moneglia
+- lat: 44.238
+  lng: 9.691
+  city: La Spezia
