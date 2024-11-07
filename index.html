@@ -18,7 +18,8 @@ layout: default
   <div class="home">
     <div class="post-list">
       <ul>
-        {% for post in site.posts %}
+        {% assign posts = site.posts | where_exp: "post", "post.draft != true" %}
+        {% for post in posts %}
           <li>
             <span><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></span>
             <small>{{ post.date | date: "%Y %b %-d" }}</small>
