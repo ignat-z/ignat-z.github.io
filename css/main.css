@@ -1,0 +1,269 @@
+/* Base Styles */
+html {
+    font-size: 18px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    line-height: 1.75;
+    color: #2d3748;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    line-height: 1.25;
+    margin: 2rem 0 1rem;
+    font-weight: 600;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5, h6 { font-size: 1rem; }
+
+p { margin: 1.5rem 0; }
+
+a {
+    color: #3b82f6;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #2563eb;
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background: #f7fafc;
+    border-radius: 3px;
+}
+
+pre {
+    padding: 1rem;
+    overflow-x: auto;
+    background: #f7fafc;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    margin: 1.5rem 0;
+}
+
+pre code {
+    padding: 0;
+    background: none;
+}
+
+/* Layout */
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.home .menu {
+    width: 100%;
+    max-width: min(75ch, 100% - 2rem);
+    padding: 1rem 0;
+    margin: 0 auto;
+}
+
+.home .menu .item {
+    list-style: none;
+    display: inline-block;
+    margin-right: 1.5rem;
+}
+
+.home .menu .item:last-child {
+    margin-right: 0;
+}
+
+.home .menu .item a {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    color: #2d3748;
+}
+
+.home .menu .item a:hover {
+    color: #3b82f6;
+}
+
+.home .content {
+    width: 100%;
+    max-width: min(75ch, 100% - 2rem);
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+#map {
+    height: 40rem;
+    width: 100%;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+/* Progress Indicator */
+#progress-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    z-index: 1000;
+    transition: width 100ms ease-out;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+    background-size: 200% auto;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+/* Syntax Highlighting */
+.highlight {
+    margin: 1.5rem 0;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.95em;
+    line-height: 1.5;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.highlight pre {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.highlight .c, .highlight .cm, .highlight .cp, .highlight .c1, .highlight .cs { color: #6b7280; font-style: italic; }
+.highlight .err { color: #dc2626; background-color: #fee2e2; }
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kp, .highlight .kr { color: #7c3aed; font-weight: 500; }
+.highlight .o, .highlight .ow { color: #0f766e; font-weight: 500; }
+.highlight .nb { color: #0369a1; }
+.highlight .nx { color: #0f766e; }
+.highlight .nl { color: #0f766e; }
+.highlight .nn { color: #374151; }
+.highlight .nt { color: #be185d; }
+.highlight .nf { color: #0891b2; font-weight: 500; }
+.highlight .na { color: #2563eb; }
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .se,
+.highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss { color: #059669; }
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo { color: #0891b2; }
+.highlight .p { color: #4b5563; }
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #1a202c;
+        color: #f7fafc;
+    }
+
+    a {
+        color: #60a5fa;
+    }
+
+    a:hover {
+        color: #93c5fd;
+    }
+
+    a:visited {
+        color: #818cf8;
+    }
+
+    code {
+        background: #2d3748;
+    }
+
+    pre {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+
+    .home .menu .item a {
+        color: #f7fafc;
+    }
+
+    .home .menu .item a:hover {
+        color: #60a5fa;
+    }
+
+    #progress-indicator {
+        background: linear-gradient(to right, #60a5fa, #a78bfa);
+        box-shadow: 0 0 8px rgba(96, 165, 250, 0.5);
+    }
+
+    .highlight {
+        background: #1e293b;
+        border-color: #334155;
+    }
+
+    .highlight .c, .highlight .cm, .highlight .cp, .highlight .c1, .highlight .cs { color: #94a3b8; }
+    .highlight .err { color: #fb7185; background-color: rgba(251,113,133,0.15); }
+    .highlight .k, .highlight .kc, .highlight .kd, .highlight .kp, .highlight .kr { color: #a5b4fc; }
+    .highlight .o, .highlight .ow { color: #22d3ee; }
+    .highlight .nb { color: #93c5fd; }
+    .highlight .nx { color: #22d3ee; }
+    .highlight .nl { color: #22d3ee; }
+    .highlight .nn { color: #e2e8f0; }
+    .highlight .nt { color: #f472b6; }
+    .highlight .nf { color: #34d399; }
+    .highlight .na { color: #60a5fa; }
+    .highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .se,
+    .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .s1, .highlight .ss { color: #34d399; }
+    .highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo { color: #22d3ee; }
+    .highlight .p { color: #e2e8f0; }
+}
+
+@media screen and (max-width: 640px) {
+    html {
+        font-size: 16px;
+    }
+
+    .home .menu {
+        padding: 1rem 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    .home .menu .item {
+        margin-right: 1rem;
+    }
+
+    .home .content {
+        padding: 1rem 0;
+    }
+
+    #map {
+        height: 25rem;
+    }
+
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    h4, h5, h6 { font-size: 1rem; }
+}
